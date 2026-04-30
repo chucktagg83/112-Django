@@ -49,5 +49,21 @@ Running the django project
 3. enter username:
 4. enter email:
 5. enter password (will have to type twice)
-"# 112-Django" 
-"# 112-Django" 
+
+## Creating Apps
+
+Windows: python manage.py startapp NAME_OF_THE_APP (lowercase)
+Mac OS: python3 manage.py startapp NAME_OF_THE_APP (lowercase)
+
+## Command to Check the project for errors
+
+Windows: python manage.py check
+Mac OS: python3 manage.py check
+
+## Creating a page
+
+1. Create a view inside of pages app called AboutPageView
+2. Create a template called about.html
+3. h1 title that says About Me
+4. p with a little description about yourself
+5. Add a url inside of pages app
