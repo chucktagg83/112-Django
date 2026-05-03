@@ -1,19 +1,54 @@
 <!DOCTYPE html>
+<!-- Tells the browser this is an HTML5 document -->
+
 <html lang="en">
+<!-- Starts the HTML document, language is English -->
+
 <head>
+    <!-- Contains meta info (not visible on the page) -->
+
     <meta charset="UTF-8">
+    <!-- Supports most characters (important for text display) -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Makes your site responsive on mobile devices -->
+
     <title>{% block title %}{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Django block for page title (each page can set its own title) -->
+
+    <!-- Bootstrap CSS (pre-built styling for layout, buttons, etc.) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+          crossorigin="anonymous">
+
     {% block css %}{% endblock %}
+    <!-- Optional block for adding custom CSS on specific pages -->
+
 </head>
+
 <body>
+    <!-- Everything inside body is visible on the page -->
+
     {% include 'navbar.html'%}
+    <!-- This inserts a separate navbar file (reusable across all pages) -->
+
     <div class="container">
+        <!-- Bootstrap container adds spacing and keeps content centered -->
+
         {% block content %}
+        <!-- Main content area (each page fills this in) -->
         {% endblock %}
+
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JavaScript (needed for dropdowns, modals, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous"></script>
+
     {% block js %}{% endblock %}
+    <!-- Optional block for adding custom JavaScript on specific pages -->
+
 </body>
 </html>

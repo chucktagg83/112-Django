@@ -1,13 +1,43 @@
 {% extends 'base.html' %}
+<!-- This tells Django to use base.html as the main layout (like a template wrapper) -->
+
+{% load static %}
+<!-- This allows you to use the tag to link to static files (like CSS and JS) -->
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}"/>
+<!-- This block allows you to add custom CSS for this page, linking to about.css in the static folder -->
+{% endblock %}
+<!-- This is an optional block for adding custom CSS, currently empty -->
 
 {% block title %}
+    <!-- This is the "title" section defined in base.html -->
+    <!-- Whatever you put here will replace the title block in base.html -->
     About Page
 {% endblock %}
+<!-- Ends the title block -->
 
 {% block content %}
+<!-- This is the main content section of your page -->
+
     <h1>About</h1>
-    <p>I'm a retired US Navy Sailor, after 21 years of service.  I was an Analyst for the duration of my career, now looking to move over to the Information Technology world.  I have completed my Bachelor's
-        of Science in Information Technology, now i'm working on learning the skills that can make me marketable and ready to work!
+    <!-- Heading displayed on the page -->
+
+    <p>
+        <!-- Paragraph text shown to the user -->
+        I'm a retired US Navy Sailor, after 21 years of service.  
+        I was an Analyst for the duration of my career, now looking 
+        to move over to the Information Technology world.  
+        I have completed my Bachelor's of Science in Information Technology, 
+        now i'm working on learning the skills that can make me marketable 
+        and ready to work!
     </p>
 
 {% endblock %}
+<!-- Ends the content block -->
+
+{% block js %}
+<!-- This is an optional block for adding custom JavaScript, currently empty -->
+ <script src="{% static 'js/about.js' %}"></script>
+ <!-- This links to about.js in the static folder, which can contain JavaScript specific to this page -->
+{% endblock %}  

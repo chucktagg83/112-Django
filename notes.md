@@ -42,6 +42,12 @@ Running the django project
     MAC OS: python3 manage.py runserver
     Windows: python|py manage.py runserver
 
+## Step 8
+
+Creating django apps
+
+Both: python manage.py startapp NAME_OF_THE_APP
+
 ## Creating a Superuser/ login
 
 1. close server (Ctrl C)
@@ -67,3 +73,10 @@ Mac OS: python3 manage.py check
 3. h1 title that says About Me
 4. p with a little description about yourself
 5. Add a url inside of pages app
+
+## Models in Django
+
+When we finish a model structure we need to run these commands in order:
+
+    1. python manage.py makemigrations
+    2. python manage.py migrate
