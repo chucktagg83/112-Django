@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+<!-- This tells Django to use base.html as the main layout/template -->
+
+{% block title %} # The title block sets the page title (used in base.html) to "Delete Post"
+    Delete Post # This is the title that will appear in the browser tab when viewing this page
+{% endblock %} #  End of title block  
+
+{% block content %} # The content block will replace the content section in base.html with the following HTML when this page is rendered
+    <h1>Delete Post</h1> # Heading for the delete confirmation page
+
+     # The following paragraph asks the user to confirm if they want to delete the post, and it displays the title of the post being deleted in bold
+    <p>Are you sure you want to delete this post?<strong>{{ post.title }}</strong></p>
+    <form method="post"> # This form will submit a POST request to the same URL when the user clicks the "Confirm Delete" button
+        {% csrf_token %} # This is a security measure to prevent Cross-Site Request Forgery (CSRF) attacks. It generates a hidden input with a token that Django checks when the form is submitted.
+        <input type="submit" value="Confirm Delete" class="btn btn-danger"> # The Confirm Delete button submits the form to delete the post
+         <hr> # Horizontal line for spacing
+        <a href="{% url 'post_detail' object.id %}" class="btn btn-secondary">Cancel</a># 
+    </form>
+{% endblock %}

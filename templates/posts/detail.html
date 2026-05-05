@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+<!-- This tells Django to use base.html as the main layout/template -->
+
+{% block title %}
+    Post ID: {{ single_post.id }}
+{% endblock %}
+<!-- This sets the page title (usually shown in the browser tab)
+     single_post.id is dynamically pulled from the database -->
+
+{% block content %}
+<!-- Everything inside this block replaces the content section in base.html -->
+
+    <h1 class="mt-0 mb-5">Title: {{ single_post.title }}</h1>
+    <!-- Displays the title of the post -->
+
+    <h3>Subtitle: {{ single_post.subtitle }}</h3>
+    <!-- Displays the subtitle of the post -->
+
+    <span>
+        <strong>Author: {{ single_post.author }}</strong>
+    </span>
+    <!-- Shows the author name in bold -->
+
+    <span>
+        Created On: {{ single_post.created_on }}
+    </span>
+    <!-- Displays the date the post was created -->
+
+    <hr>
+    <!-- Horizontal line to separate header info from the body -->
+
+    <p>Body: {{ single_post.body }}</p>
+    <!-- Displays the main content/body of the post -->
+
+    <hr>
+    <!-- Horizontal line to separate the post content from the edit link -->
+
+    <a href="{% url 'post_edit' single_post.id %}" class="btn btn-secondary">Edit Post</a>
+    <a href="{% url 'post_delete' single_post.id %}" class="btn btn-danger">Delete Post</a>
+    <!-- Edit and Delete buttons link to their respective pages using the post's ID -->
+{% endblock %}
+<!-- Ends the content block -->

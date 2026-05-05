@@ -1,16 +1,50 @@
 {% extends 'base.html' %}
+<!-- This tells Django to use base.html as the main layout -->
 
 {% block title %}
     Posts
 {% endblock %}
+<!-- This sets the page title (used in base.html) -->
 
 {% block content %}
-    <h1>All Posts</h1>
-        <div>
+<!-- Everything inside this block will go into the main content area of base.html -->
+    <div class="text-center" style="background-color: grey; padding: 20px; border-radius: 10px; height: 700px; display: flex; flex-direction: column; align-items: center;">
+        <h1 class="mt-0 mb-5">All Posts</h1>
+        <!-- Page heading -->
+         <div class="fs-3">
             <ul>
-{% for post in posts %}
-<li>{{ post.id }} - {{ post.title}}</li>
-{% endfor %}
-            </ul>
-        </div>
+                <!-- Unordered list to hold all posts -->
+
+                {% for post in posts %}
+                <!-- Loop through each post passed from the view -->
+
+                    <li>
+                        <!-- Each post is one list item -->
+
+                        {{ post.id }} - {{ post.title }}
+                        <!-- Display post ID and title -->
+
+                        <br>
+                        <!-- Line break for spacing -->
+
+                        <a href="{% url 'post_detail' post.id %}">
+                            <!-- Django builds a dynamic URL using:
+                                name='post_detail' and post.id -->
+
+                            Continue Reading →
+                            <!-- Link text -->
+                        </a>
+
+                    </li>
+
+                {% endfor %}
+                <!-- End of loop -->
+
+            </ul>   
+         </div>
+        
+    </div>
+    
+
 {% endblock %}
+<!-- End of content block -->
