@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'posts',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,6 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 # https://docs.djangoproject.com/en/55.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = "home" # Redirect to home page after login
+# LOGOUT_REDIRECT_URL = "home" # Redirect to login page after logout
