@@ -7,7 +7,11 @@ from django.views.generic import DetailView, ListView, DeleteView, CreateView, U
 # Import your Post model (this connects your views to your database)
 from .models import Post
 from django.contrib.auth.models import User # Import User model to link posts to users
-
+from django.urls import reverse_lazy # Import reverse_lazy for redirecting after delete
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin, # Import LoginRequiredMixin to restrict access to certain views
+    UserPassesTestMixin, # Import UserPassesTestMixin to restrict access to certain views based on custom logic
+    ) 
 
 # Create your views here.
 
@@ -28,12 +32,20 @@ class PostListView(ListView):
     # Default is "object_list", but we rename it to "posts"
     # So in HTML you can use: {% for post in posts %}
     context_object_name = "posts"
-    
+
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    print(f"Before modifying context: \n{context}") # Print the original context for debugging
+    context["new_elements"] = "This is some new data added to the context!" # Add new data to the context  
+    print(f"After modifying context: \n{context}") # Print the modified context for debugging   
+    return context
+# This method allows you to add extra data to the context that is passed to the template.
+# In this example, we just print the context to the console for debugging purposes.   
 
 # -------------------------------
 # DETAIL VIEW (shows one post)
 # -------------------------------
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
 
     # Specifies which HTML template to use for a single post
     template_name = "posts/detail.html"
@@ -47,11 +59,10 @@ class PostDetailView(DetailView):
     # So in HTML you can use: {{ post.title }}
     context_object_name = "single_post"
 
-
 # -------------------------------
 # CREATE VIEW (creates a new post)
 # -------------------------------
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin,CreateView):
 
     # Specifies which HTML template to use for the form
     template_name = "posts/new.html"
@@ -71,7 +82,7 @@ class PostCreateView(CreateView):
 # -------------------------------
 # UPDATE VIEW (updates one post)
 # -------------------------------
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     # Specifies which HTML template to use for the form
     template_name = "posts/edit.html"
@@ -82,10 +93,21 @@ class PostUpdateView(UpdateView):
     # Specifies which fields to show in the form
     fields = ["title", "subtitle", "body"]
     
+    
+    def test_func(self):
+        # Get the post object that is being updated
+        post = self.get_object()
+        
+        if self.request.user.is_authenticated: # Check if the user is logged in
+        # Check if the current logged-in user is the author of the post
+            if self.request.user == post.author:
+                return True # Allow access to update if user is the author
+        else:
+            return False # Deny access if user is not the author
 # -------------------------------
 # DELETE VIEW (deletes one post)
 # -------------------------------
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     # Specifies which HTML template to use for the delete confirmation
     template_name = "posts/delete.html"
@@ -95,4 +117,14 @@ class PostDeleteView(DeleteView):
 
     success_url = reverse_lazy("post_list") # reverse_lazy is used here because we need to wait until the URL patterns are loaded
     
+    def test_func(self):
+        # Get the post object that is being updated
+        post = self.get_object()
+        
+        if self.request.user.is_authenticated: # Check if the user is logged in
+        # Check if the current logged-in user is the author of the post
+            if self.request.user == post.author:
+                return True # Allow access to update if user is the author
+        else:
+            return False # Deny access if user is not the author
     

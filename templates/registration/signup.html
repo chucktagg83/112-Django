@@ -1,4 +1,5 @@
 {% extends 'base.html' %} <!-- This line indicates that this template extends the base.html template, which means it will inherit the structure and styling defined in base.html. -->
+{% load crispy_forms_tags %} <!-- This line loads the crispy_forms_tags, which are used to render forms in a more elegant way using the Crispy Forms library. --> 
 
 {% block title %} <!-- This block defines the title of the page, which will be displayed in the browser tab and can also be used in the base template to set the page title dynamically. -->
     Sign Up <!-- This block defines the title of the page, which will be displayed in the browser tab and can also be used in the base template to set the page title dynamically. -->
@@ -8,7 +9,7 @@
     <h1>Sign Up</h1> <!-- This line displays a heading for the sign-up page. -->
     <form method="post"> <!-- This line starts a form that will submit data using the POST method. The form will be used to create a new user account. -->
         {% csrf_token %} <!-- This line adds a CSRF token to the form for security purposes, preventing cross-site request forgery attacks. -->
-        {{ form.as_p }} <!-- This line renders the form fields as paragraphs. The form variable is passed from the view and contains the fields for user registration. -->
+        {{ form|crispy }} <!-- This line renders the form fields using the Crispy Forms library for a more elegant appearance . -->
         <input type="submit" value="Sign Up" class="btn btn-success"> <!-- This line adds a submit button to the form with the label "Sign Up" and applies the Bootstrap class "btn btn-success" for styling. -->
     </form>
 {% endblock %}

@@ -3,7 +3,7 @@
 
     <a class="navbar-brand" href="{% url 'home' %}">Blog</a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -23,24 +23,21 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'post_list' %}">Posts</a>
         </li>
+        {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'post_new' %}">Create Post</a>
         </li>
+        {% endif %}
       </ul>
 
       <!-- RIGHT SIDE -->
       <ul class="navbar-nav ms-auto">
         <!-- ms-auto pushes this list to the right -->
 
+        
+        {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Log In</a>
-        </li>
-
-        <li class="nav-item">
+            <span class="badge text-bg-info">{{ user.username }}</span>
           <form action="{% url 'logout' %}" method="post" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger btn-sm ms-2">
@@ -48,7 +45,14 @@
             </button>
           </form>
         </li>
-
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Log In</a>
+        </li>
+        {% endif %}
       </ul>
 
     </div>
