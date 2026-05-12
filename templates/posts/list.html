@@ -7,44 +7,60 @@
 <!-- This sets the page title (used in base.html) -->
 
 {% block content %}
-<!-- Everything inside this block will go into the main content area of base.html -->
-    <div class="text-center" style="background-color: grey; padding: 20px; border-radius: 10px; height: 700px; display: flex; flex-direction: column; align-items: center;">
-        <h1 class="mt-0 mb-5">All Posts</h1>
-        <!-- Page heading -->
-         <div class="fs-3">
-            <ul>
-                <!-- Unordered list to hold all posts -->
 
-                {% for post in posts %}
-                <!-- Loop through each post passed from the view -->
+<div class="container py-5">
 
-                    <li>
-                        <!-- Each post is one list item -->
-
-                        {{ post.id }} - {{ post.title }}
-                        <!-- Display post ID and title -->
-
-                        <br>
-                        <!-- Line break for spacing -->
-
-                        <a href="{% url 'post_detail' post.id %}">
-                            <!-- Django builds a dynamic URL using:
-                                name='post_detail' and post.id -->
-
-                            Continue Reading →
-                            <!-- Link text -->
-                        </a>
-
-                    </li>
-
-                {% endfor %}
-                <!-- End of loop -->
-
-            </ul>   
-         </div>
-        
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">All Posts</h1>
+        <p class="text-secondary text-white">Browse all blog posts below.</p>
     </div>
-    
 
-{% endblock %}
-<!-- End of content block -->
+    <div class="row g-4">
+
+        {% for post in posts %}
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-lg border-0 rounded-4">
+
+                <div class="card-body p-4">
+
+                    <span class="badge bg-primary mb-3">
+                        Post #{{ post.id }}
+                    </span>
+
+                    <h3 class="card-title">
+                        {{ post.title }}
+                    </h3>
+
+                    <p class="card-text text-secondary">
+                        {{ post.subtitle }}
+                    </p>
+
+                    <p class="small text-muted">
+                        Status: {{ post.status }}
+                    </p>
+
+                    <a href="{% url 'post_detail' post.id %}" class="btn btn-outline-primary w-100">
+                        Continue Reading →
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                No posts found.
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock content %}

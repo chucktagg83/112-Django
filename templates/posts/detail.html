@@ -17,12 +17,17 @@
     <!-- Displays the subtitle of the post -->
 
     <span>
-        <strong>Author: {{ single_post.author }}</strong>
+        <strong>Author:</strong> {{ single_post.author }}
     </span>
     <!-- Shows the author name in bold -->
-
+    <br>
     <span>
-        Created On: {{ single_post.created_on }}
+        <strong>Status:</strong> {{ single_post.status }}
+    </span>
+    <!-- Displays the status of the post -->
+    <br>
+    <span>
+        <strong>Created On:</strong> {{ single_post.created_on }}
     </span>
     <!-- Displays the date the post was created -->
 
@@ -35,7 +40,7 @@
     <hr>
     <!-- Horizontal line to separate the post content from the edit link -->
 
-    <a href="{% url 'post_edit' single_post.id %}" class="btn btn-secondary">Edit Post</a>
+    <a href="{% url 'post_edit' single_post.id %}" class="btn btn-warning">Edit Post</a>
     <a href="{% url 'post_delete' single_post.id %}" class="btn btn-danger">Delete Post</a>
     <!-- Edit and Delete buttons link to their respective pages using the post's ID -->
 {% endblock %}

@@ -7,6 +7,15 @@ from django.contrib.auth import get_user_model
 # Import reverse() to dynamically create URLs (instead of hardcoding)
 from django.urls import reverse
 
+class Status (models.Model): # This creates a new database table called "Status"
+    class Meta: # This inner class is used to configure model options
+        verbose_name_plural = "Status" # This changes the plural name in the admin panel to "Status" instead of "Statuss"
+        
+    name = models.CharField(max_length=128, unique=True)
+    description = models.TextField(max_length=200, help_text="Write a description of the status")
+    
+    def __str__(self): # This method defines how the Status object is displayed as a string (e.g., in the admin panel)
+        return f"{self.name}" # This will show the name of the status when you look at it in the admin panel or when you print it
 
 # Create your Post model (this becomes a database table)
 class Post(models.Model):
@@ -29,6 +38,10 @@ class Post(models.Model):
     author = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE
+    )
+    status = models.ForeignKey(
+        Status,
+        on_delete=models.DO_NOTHING
     )
 
     # Controls how the post appears in Django Admin (string format)

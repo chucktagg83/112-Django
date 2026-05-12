@@ -4,6 +4,8 @@
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, DeleteView, CreateView, UpdateView
 
+from posts import apps
+
 # Import your Post model (this connects your views to your database)
 from .models import Post
 from django.contrib.auth.models import User # Import User model to link posts to users
@@ -53,6 +55,10 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     # Tells Django which model to use
     # It will retrieve ONE Post based on the URL (usually by ID)
     model = Post
+    
+      # Specifies which fields to show in the form
+    # This will automatically generate form fields for title, subtitle, and body, status but not for author (we will set that in form_valid)
+    fields = ["title", "subtitle", "body", "status"]
 
     # This is the name used in your template
     # Default is "object", but we rename it to "post"
@@ -71,8 +77,8 @@ class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
 
     # Specifies which fields to show in the form
-    # This will automatically generate form fields for title, subtitle, and body
-    fields = ["title", "subtitle", "body"]
+    # This will automatically generate form fields for title, subtitle, and body, status but not for author (we will set that in form_valid)
+    fields = ["title", "subtitle", "body", "status"]
     
     def form_valid(self, form):
         # Before saving the form, set the author to the current logged-in user
@@ -91,7 +97,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
 
     # Specifies which fields to show in the form
-    fields = ["title", "subtitle", "body"]
+    fields = ["title", "subtitle", "body", "status"]
     
     
     def test_func(self):
@@ -104,7 +110,6 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
                 return True # Allow access to update if user is the author
         else:
             return False # Deny access if user is not the author
-# -------------------------------
 # DELETE VIEW (deletes one post)
 # -------------------------------
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):

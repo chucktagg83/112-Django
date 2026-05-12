@@ -5,5 +5,60 @@
 {% endblock %}
 
 {% block content %}
-    <p>Hello World using Jinja Tags</p>
+
+<div class="container mt-5">
+
+    <!-- Main Section -->
+    <div class="p-5 mb-4 bg-dark text-white rounded-3 shadow-lg text-center"> <!--Bootstrap Jumbotron for a big welcome message -->
+        <div class="container-fluid py-5"> <!-- Adds padding inside the jumbotron -->
+            <h1 class="display-4 fw-bold">Welcome to My Django Blog</h1> <!-- Large, bold heading -->
+            <p class="fs-5 mt-3">   <!-- Medium-sized text with some margin on top -->     
+                Hello World using Jinja Tags!   
+            </p>
+            <a href="{% url 'post_list' %}" class="btn btn-primary btn-lg mt-3"> <!-- Large primary button with margin on top -->
+                View Blog Posts
+            </a>
+        </div>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body">
+                    <h3 class="card-title">Create</h3>
+                    <p class="card-text">
+                        Add new blog posts with titles, subtitles, body text, authors, and status.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body">
+                    <h3 class="card-title">Read</h3>
+                    <p class="card-text">
+                        View individual posts and see details like author, creation date, and status.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body">
+                    <h3 class="card-title">Update</h3>
+                    <p class="card-text">
+                        Edit your posts and change their status between draft, published, or archived.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock %}

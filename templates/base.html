@@ -5,50 +5,85 @@
 <!-- Starts the HTML document, language is English -->
 
 <head>
-    <!-- Contains meta info (not visible on the page) -->
+    <!-- Contains meta info, links, and page setup -->
 
     <meta charset="UTF-8">
-    <!-- Supports most characters (important for text display) -->
+    <!-- Supports most characters and symbols -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Makes your site responsive on mobile devices -->
+    <!-- Makes the site responsive on phones, tablets, and desktops -->
 
     <title>{% block title %}{% endblock %}</title>
-    <!-- Django block for page title (each page can set its own title) -->
+    <!-- Django block for each page title -->
 
-    <!-- Bootstrap CSS (pre-built styling for layout, buttons, etc.) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
           crossorigin="anonymous">
 
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
     {% block css %}{% endblock %}
-    <!-- Optional block for adding custom CSS on specific pages -->
+    <!-- Optional page-specific CSS -->
 
 </head>
 
-<body>
-    <!-- Everything inside body is visible on the page -->
+<body class="bg-dark text-light d-flex flex-column min-vh-100">
+    <!-- 
+        bg-dark = dark background
+        text-light = light text
+        d-flex flex-column = allows footer to stay near bottom
+        min-vh-100 = body takes full screen height
+    -->
 
-    {% include 'navbar.html'%}
-    <!-- This inserts a separate navbar file (reusable across all pages) -->
+    <!-- Reusable navbar -->
+    {% include 'navbar.html' %}
 
-    <div class="container">
-        <!-- Bootstrap container adds spacing and keeps content centered -->
+    <!-- Main page wrapper -->
+    <main class="flex-grow-1">
 
-        {% block content %}
-        <!-- Main content area (each page fills this in) -->
-        {% endblock %}
+        <!-- Fancy page container -->
+        <div class="container my-5">
 
-    </div>
+            <!-- Main content card -->
+            <div class="card bg-secondary text-light shadow-lg border-0 rounded-4">
 
-    <!-- Bootstrap JavaScript (needed for dropdowns, modals, etc.) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+                <div class="card-body p-4">
+
+                    {% block content %}
+                    <!-- Main content area for child templates -->
+                    {% endblock %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center text-secondary py-3 mt-auto border-top border-secondary">
+        <div class="container">
+            <p class="mb-0">
+                Copyright &copy: {{ current_year }} My Django Blog. All rights reserved.
+                <br>
+                <i class="bi bi-code-slash"></i>
+                Built with Django and Bootstrap
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"></script>
 
     {% block js %}{% endblock %}
-    <!-- Optional block for adding custom JavaScript on specific pages -->
+    <!-- Optional page-specific JavaScript -->
 
 </body>
 </html>
