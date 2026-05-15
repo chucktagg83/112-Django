@@ -3,7 +3,7 @@ from django.urls import path
 
 # Import the views we want to connect to URLs
 # The dot (.) means "from this same folder (posts app)"
-from .views import PostCreateView, PostListView, PostDetailView, PostUpdateView, PostDeleteView # Import PostUpdateView and PostDeleteView for editing and deleting posts]
+from .views import PostCreateView, PostDraftListView, PostListView, PostDetailView, PostUpdateView, PostDeleteView, PostArchivedListView # Import PostUpdateView and PostDeleteView for editing and deleting posts]
 
 
 # This list tells Django:
@@ -63,4 +63,19 @@ urlpatterns = [
     #   - deleting the post (POST request)
     # name="post_delete" allows usage in templates like:    
     # {% url 'post_delete' post.id %}
+    
+    path("archived/", PostArchivedListView.as_view(), name="archived"), # URL for showing archived posts
+    # Example: http://127.0.0.1:8000/posts/1/archived/
+    # PostArchivedListView handles:
+    #   - displaying a list of archived posts (GET request)
+    # name="post_archived_list" allows usage in templates like:
+    # {% url 'post_archived_list' %}
+    
+    path("drafts/", PostDraftListView.as_view(), name="drafts"), # URL for showing draft posts
+    # Example: http://  http://127.0.0.1:8000/posts/1/archived/
+    # PostArchivedListView handles:
+    #   - displaying a list of archived posts (GET request)
+    # name="post_draft_list" allows usage in templates like:
+    # {% url 'post_draft_list' %}
 ]
+

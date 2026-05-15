@@ -25,7 +25,7 @@
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'post_new' %}">Create Post</a>
+          <a class= "nav-link btn btn-successtext-white border border-dark" href="{% url 'post_new' %}">Create Post</a>
         </li>
         {% endif %}
       </ul>
@@ -33,9 +33,11 @@
       <!-- RIGHT SIDE -->
       <ul class="navbar-nav ms-auto">
         <!-- ms-auto pushes this list to the right -->
-
-        
+        <li class="nav-item">
+          <a href="{% url 'password_change' %}" class="nav-link">Change Password</a>
+        </li>
         {% if user.is_authenticated %}
+
         <li class="nav-item">
             <span class="badge text-bg-info">{{ user.username }}</span>
           <form action="{% url 'logout' %}" method="post" class="d-inline">
@@ -45,6 +47,7 @@
             </button>
           </form>
         </li>
+         
         {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>

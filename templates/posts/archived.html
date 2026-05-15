@@ -1,27 +1,15 @@
 {% extends 'base.html' %}
-<!-- This tells Django to use base.html as the main layout -->
 
 {% block title %}
-    Posts
+    Archived Posts
 {% endblock %}
-<!-- This sets the page title (used in base.html) -->
 
 {% block content %}
-
-  <a class="btn btn-outline-warning" href="{% url 'drafts' %}">
-    Draft Posts
-  </a>
-
-  <a class="btn btn-outline-info" href="{% url 'archived' %}">
-    Archived Posts
-  </a>
-</div>
-
 <div class="container py-5">
 
     <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold">All Posts</h1>
-        <p class="text-secondary text-white">Browse all blog posts below.</p>
+        <h1 class="display-5 fw-bold">Archived Posts</h1>
+        <p class="text-secondary text-white">Browse all archived blog posts below.</p>
     </div>
 
     <div class="row g-4">
@@ -33,43 +21,38 @@
 
                 <div class="card-body p-4">
 
-                    <span class="badge bg-primary mb-3">
+                    <span class="badge bg-secondary mb-3">
                         Post #{{ post.id }}
                     </span>
 
                     <h3 class="card-title">
-                        {{ post.title }}
+                        {{ post.title }}    
                     </h3>
-
+{% if post.subtitle %}
                     <p class="card-text text-secondary">
                         {{ post.subtitle }}
                     </p>
+{% endif %}
 
-                    <p class="small text-muted">
-                        Status: {{ post.status }}
+                    <p class="small text muted">
+                        Status: {{ post.status }}   
                     </p>
-
-                    <a href="{% url 'post_detail' post.id %}" class="btn btn-outline-primary w-100">
-                        Continue Reading →
+                    <a href="{% url 'post_detail' post.id %}" class="btn btn-outline-secondary w-100">
+                        View Details →
                     </a>
-
                 </div>
-
             </div>
         </div>
 
         {% empty %}
-
         <div class="col-12">
             <div class="alert alert-warning text-center">
-                No posts found.
-            </div>
+                No archived posts found.
+            </div>      
         </div>
-
         {% endfor %}
-
     </div>
-
 </div>
 
-{% endblock content %}
+{% endblock %}  
+

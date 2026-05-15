@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView, DeleteView, CreateView, U
 from posts import apps
 
 # Import your Post model (this connects your views to your database)
-from .models import Post
+from .models import Post, Status
 from django.contrib.auth.models import User # Import User model to link posts to users
 from django.urls import reverse_lazy # Import reverse_lazy for redirecting after delete
 from django.contrib.auth.mixins import (
@@ -21,19 +21,21 @@ from django.contrib.auth.mixins import (
 # LIST VIEW (shows all posts)
 # -------------------------------
 class PostListView(ListView):
+    
+    template_name = "posts/list.html" 
+    # This tells Django to use the "list.html" template when rendering this view. By default, it would look for "post_list.html" based on the model name, but we specify it explicitly here.
+    
+    model = Post 
+    # This tells Django which model to use for this view. It will automatically retrieve all Post
+    
+    context_object_name = "posts" 
+    # This changes the default context variable name from "object_list" to "posts". In your template, you can now use {% for post in posts %} instead of {% for post in object_list %}.       
 
-    # Specifies which HTML template to use
-    # Django will render this file when the view is accessed
-    template_name = "posts/list.html"
 
-    # Tells Django which model (table) to pull data from
-    # This will automatically retrieve all Post objects
-    model = Post
-
-    # This is the name used in your HTML template
-    # Default is "object_list", but we rename it to "posts"
-    # So in HTML you can use: {% for post in posts %}
-    context_object_name = "posts"
+def get_queryset(self):
+    # This method allows you to customize the queryset that is used to retrieve objects for this view.
+    # In this example, we filter the posts to only show those with the "Published" status and order them by creation date (newest first).
+    return Post.objects.filter(status=published_status).order_by("-created_on")
 
 def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
@@ -55,10 +57,6 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     # Tells Django which model to use
     # It will retrieve ONE Post based on the URL (usually by ID)
     model = Post
-    
-      # Specifies which fields to show in the form
-    # This will automatically generate form fields for title, subtitle, and body, status but not for author (we will set that in form_valid)
-    fields = ["title", "subtitle", "body", "status"]
 
     # This is the name used in your template
     # Default is "object", but we rename it to "post"
@@ -132,4 +130,21 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
                 return True # Allow access to update if user is the author
         else:
             return False # Deny access if user is not the author
+        
+# POSTARCHIVEDLISTVIEW (shows all archived posts)
+# -------------------------------
+
+class PostArchivedListView(ListView):
+    template_name = "posts/list.html" 
+    archived_status = Status.objects.get(name="Archived") # Get the Status object for "Archived" status
+    queryset = Post.objects.filter(status=archived_status)
+    context_object_name = "posts"
     
+# POSTDraftListView (shows all draft posts)
+# -------------------------------
+
+class PostDraftListView(ListView):
+    template_name = "posts/list.html" 
+    draft_status = Status.objects.get(name="Draft") # Get the Status object for "Draft" status
+    queryset = Post.objects.filter(status=draft_status)
+    context_object_name = "posts"
